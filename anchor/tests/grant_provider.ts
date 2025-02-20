@@ -1,9 +1,9 @@
 import * as anchor from '@coral-xyz/anchor';
 import { Program } from '@coral-xyz/anchor';
 import { Basic } from '../target/types/basic';
+import { describe, it } from 'node:test';
 
-describe('basic', () => {
-  // Configure the client to use the local cluster.
+describe('Grant Provider test', () => {
   anchor.setProvider(anchor.AnchorProvider.env());
 
   const program = anchor.workspace.Basic as Program<Basic>;

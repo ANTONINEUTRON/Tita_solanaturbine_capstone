@@ -7,6 +7,7 @@ skip-lint = false
 
 [programs.localnet]
 basic = "6z68wfurCMYkZG51s1Et9BJEd9nJGUusjHXNt4dGbNNF"
+tita_program = "8PJFAdH2RJ2v1zdME3HU477yvHf7LRheLWd3xxeSbrsZ"
 
 [registry]
 url = "https://api.apr.dev"
