@@ -49,3 +49,27 @@ Traditional grant management systems lack transparency, have high administrative
 git clone <repo-url>
 cd tita
 npm install
+  ```
+### Start local validator
+ ```shell
+solana-test-validator
+ ```
+
+### Deploy program
+```shell
+anchor build
+anchor deploy
+```
+
+### Start web app
+```shell
+npm run dev
+```
+### About
+This project is part of the Solana Turbine Program, focusing on building real-world applications on Solana blockchain.
+
+### Contact
+Antoni - antonineutron@gmail.com
+
+### License
+MIT

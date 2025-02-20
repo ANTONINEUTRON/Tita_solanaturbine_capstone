@@ -1,6 +1,6 @@
 import './globals.css'
 import {ClusterProvider} from '@/components/cluster/cluster-data-access'
-import {SolanaProvider} from '@/components/solana/solana-provider'
+import {SolanaProvider, WalletButton} from '@/components/solana/solana-provider'
 import {UiLayout} from '@/components/ui/ui-layout'
 import {ReactQueryProvider} from './react-query-provider'
 
@@ -22,7 +22,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ReactQueryProvider>
           <ClusterProvider>
             <SolanaProvider>
-              <UiLayout links={links}>{children}</UiLayout>
+              <div>
+                <div className='container mx-auto min-h-screen'>
+                  <div className='navbar flex justify-between items-center'>
+                    <div className='text-3xl font-semibold text-primary'>
+                      Tita
+                    </div>
+                    <div>
+                      <WalletButton />
+                    </div>
+                  </div>
+                  {children}
+                </div>
+                <div className='flex justify-center'>
+                  &#169; Antoni. All rights reserved
+                </div>
+              </div>
             </SolanaProvider>
           </ClusterProvider>
         </ReactQueryProvider>
