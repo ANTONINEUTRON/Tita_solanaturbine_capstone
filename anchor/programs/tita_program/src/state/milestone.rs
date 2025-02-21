@@ -4,6 +4,7 @@ use anchor_lang::prelude::*;
 #[derive(InitSpace)]
 pub struct Milestone {
     pub proposal: Pubkey,
+    pub milestone_id: u8,
     pub amount: u64,
     pub created_at: i64,
     pub updated_at: i64,

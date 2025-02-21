@@ -3,6 +3,9 @@ use crate::state::*;
 
 #[derive(Accounts)]
 pub struct CreateProposal<'info> {
+    #[account(mut)]
+    pub applicant: Signer<'info>,
+
     #[account(
         init,
         payer = applicant,
@@ -20,9 +23,6 @@ pub struct CreateProposal<'info> {
         constraint = grant_campaign.is_active
     )]
     pub grant_campaign: Account<'info, GrantCampaign>,
-
-    #[account(mut)]
-    pub applicant: Signer<'info>,
 
     pub system_program: Program<'info, System>,
 }

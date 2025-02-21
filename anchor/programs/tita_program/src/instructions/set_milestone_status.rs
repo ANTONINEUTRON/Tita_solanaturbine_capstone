@@ -5,6 +5,9 @@ use super::TitaErrorCode;
 
 #[derive(Accounts)]
 pub struct SetMilestoneStatus<'info> {
+    #[account(mut)]
+    pub grant_provider: Signer<'info>,
+
     #[account(
         mut,
         constraint = milestone.proposal == proposal.key()
@@ -19,10 +22,7 @@ pub struct SetMilestoneStatus<'info> {
     #[account(
         constraint = grant_campaign.grant_provider == grant_provider.key()
     )]
-    pub grant_campaign: Account<'info, GrantCampaign>,
-
-    #[account(mut)]
-    pub grant_provider: Signer<'info>,
+    pub grant_campaign: Account<'info, GrantCampaign>
 }
 
 impl<'info> SetMilestoneStatus<'info>{

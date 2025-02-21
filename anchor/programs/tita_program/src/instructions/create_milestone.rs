@@ -2,14 +2,18 @@ use crate::{state::*, TitaErrorCode};
 use anchor_lang::prelude::*;
 
 #[derive(Accounts)]
+#[instruction(milestone_id: u8)]
 pub struct CreateMilestone<'info> {
+    #[account(mut)]
+    pub applicant: Signer<'info>,
+    
     #[account(
         init,
         payer = applicant,
         space = 8 + Milestone::INIT_SPACE,
         seeds = [
-            b"milestone",
             proposal.key().as_ref(),
+            &[milestone_id],
         ],
         bump
     )]
@@ -29,18 +33,16 @@ pub struct CreateMilestone<'info> {
     )]
     pub grant_campaign: Account<'info, GrantCampaign>,
 
-    #[account(mut)]
-    pub applicant: Signer<'info>,
-
     pub system_program: Program<'info, System>,
 }
 
 impl<'info> CreateMilestone<'info> {
     pub fn create_milestone(
         ctx: Context<CreateMilestone>, 
-        amount: u64, 
+        milestone_id: u8,
+        amount: u64,
         proof_uri: String,
-        bumps: u8
+        bump: u8
     ) -> Result<()> {
         require!(
             amount <= ctx.accounts.grant_campaign.remaining_funding,
@@ -51,10 +53,11 @@ impl<'info> CreateMilestone<'info> {
         let clock = Clock::get()?;
 
         milestone.proposal = ctx.accounts.proposal.key();
+        milestone.milestone_id = milestone_id;
         milestone.amount = amount;
         milestone.created_at = clock.unix_timestamp;
         milestone.updated_at = clock.unix_timestamp;
-        milestone.bump = bumps;
+        milestone.bump = bump;
         milestone.proof_uri = proof_uri;
         milestone.status = MilestoneStatus::Pending;
 
