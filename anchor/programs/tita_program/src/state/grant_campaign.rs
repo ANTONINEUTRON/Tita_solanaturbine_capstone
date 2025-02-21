@@ -8,6 +8,7 @@ pub struct GrantCampaign {
     pub is_active: bool,
     pub created_at: i64,
     pub updated_at: i64,
+    pub deadline: Option<i64>,  
     pub bump: u8,
     pub grant_provider: Pubkey,
     #[max_len(32)]

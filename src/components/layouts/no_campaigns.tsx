@@ -1,6 +1,8 @@
 "use client"
 
 import Image from 'next/image'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
+import CreateCampaign from '../dialog/create_campaign'
 
 export function NoCampaignsLayout() {
     return (
@@ -14,9 +16,7 @@ export function NoCampaignsLayout() {
                         <div className='text-lg dark:text-white text-slate-700 font-thin'>
                             Create a campaign to get started
                         </div>
-                        <button className='btn btn-primary my-4 text-white'>
-                            Create Campaign
-                        </button>
+                        <CreateCampaign />
                     </div>
                 </div>
                 <div className='md:flex hidden z-50 justify-center ml-5 items-center animate-pulse'>
