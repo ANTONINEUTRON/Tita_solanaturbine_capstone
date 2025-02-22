@@ -22,10 +22,10 @@ pub struct SubmitProof<'info> {
 
 impl<'info> SubmitProof<'info> {
     pub fn submit_proof(
-        ctx: Context<SubmitProof>,
+        &mut self,
         proof_uri: String
     ) -> Result<()> {
-        let milestone = &mut ctx.accounts.milestone;
+        let milestone = &mut self.milestone;
         let clock = Clock::get()?;
 
         milestone.proof_uri = proof_uri;

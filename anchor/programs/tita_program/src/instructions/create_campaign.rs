@@ -41,13 +41,13 @@ pub struct CreateCampaign<'info> {
 
 impl<'info> CreateCampaign<'info> {
     pub fn create_campaign(
-        ctx: Context<CreateCampaign>,
+        &mut self,
         campaign_id: String,
         total_funding: u64,
         deadline: Option<i64>,
         bumps: u8
     ) -> Result<()> {
-        let campaign = &mut ctx.accounts.grant_campaign;
+        let campaign = &mut self.grant_campaign;
         let clock = Clock::get()?;
 
         campaign.total_funding = total_funding;
@@ -57,7 +57,7 @@ impl<'info> CreateCampaign<'info> {
         campaign.updated_at = clock.unix_timestamp;
         campaign.deadline = deadline;
         campaign.bump = bumps;
-        campaign.grant_provider = ctx.accounts.grant_provider.key();
+        campaign.grant_provider = self.grant_provider.key();
         campaign.campaign_id = campaign_id;
 
         Ok(())

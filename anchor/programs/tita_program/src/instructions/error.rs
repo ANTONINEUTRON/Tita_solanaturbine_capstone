@@ -6,5 +6,8 @@ pub enum TitaErrorCode {
     InsufficientFunds,
 
     #[msg("An error occured while calculating balance")]
-    CalculationError
+    CalculationError,
+
+    #[msg("No remaining funds")]
+    NoRemainingFunds
 }

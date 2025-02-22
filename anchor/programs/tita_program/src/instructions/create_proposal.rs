@@ -11,7 +11,6 @@ pub struct CreateProposal<'info> {
         payer = applicant,
         space = 8 + Proposal::INIT_SPACE,
         seeds = [
-            b"proposal",
             grant_campaign.key().as_ref(),
             applicant.key().as_ref(),
         ],
@@ -29,14 +28,14 @@ pub struct CreateProposal<'info> {
 
 impl<'info> CreateProposal<'info> {
     pub fn create_proposal(
-        ctx: Context<CreateProposal>,
+        &mut self,
         bump: u8
     ) -> Result<()> {
-        let proposal = &mut ctx.accounts.proposal;
+        let proposal = &mut self.proposal;
         let clock = Clock::get()?;
 
-        proposal.grant_campaign = ctx.accounts.grant_campaign.key();
-        proposal.applicant = ctx.accounts.applicant.key();
+        proposal.grant_campaign = self.grant_campaign.key();
+        proposal.applicant = self.applicant.key();
         proposal.status = ProposalStatus::Pending;
         proposal.created_at = clock.unix_timestamp;
         proposal.updated_at = clock.unix_timestamp;

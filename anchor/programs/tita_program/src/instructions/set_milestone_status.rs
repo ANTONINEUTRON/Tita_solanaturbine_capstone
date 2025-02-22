@@ -27,10 +27,10 @@ pub struct SetMilestoneStatus<'info> {
 
 impl<'info> SetMilestoneStatus<'info>{
     pub fn set_milestone_status(
-        ctx: Context<SetMilestoneStatus>,
+        &mut self,
         status: MilestoneStatus
     ) -> Result<()> {
-        let milestone = &mut ctx.accounts.milestone;
+        let milestone = &mut self.milestone;
         let clock = Clock::get()?;
 
         milestone.status = status;

@@ -21,7 +21,7 @@ pub struct CreateMilestone<'info> {
 
     #[account(
         mut,
-        constraint = proposal.status == ProposalStatus::Approved,
+        constraint = proposal.status == ProposalStatus::Pending,
         constraint = proposal.applicant == applicant.key()
     )]
     pub proposal: Account<'info, Proposal>,
@@ -38,21 +38,21 @@ pub struct CreateMilestone<'info> {
 
 impl<'info> CreateMilestone<'info> {
     pub fn create_milestone(
-        ctx: Context<CreateMilestone>, 
+        &mut self, 
         milestone_id: u8,
         amount: u64,
         proof_uri: String,
         bump: u8
     ) -> Result<()> {
         require!(
-            amount <= ctx.accounts.grant_campaign.remaining_funding,
+            amount <= self.grant_campaign.remaining_funding,
             TitaErrorCode::InsufficientFunds
         );
 
-        let milestone = &mut ctx.accounts.milestone;
+        let milestone = &mut self.milestone;
         let clock = Clock::get()?;
 
-        milestone.proposal = ctx.accounts.proposal.key();
+        milestone.proposal = self.proposal.key();
         milestone.milestone_id = milestone_id;
         milestone.amount = amount;
         milestone.created_at = clock.unix_timestamp;
@@ -62,8 +62,7 @@ impl<'info> CreateMilestone<'info> {
         milestone.status = MilestoneStatus::Pending;
 
         // Update remaining funding in campaign
-        ctx.accounts.grant_campaign.remaining_funding = ctx
-            .accounts
+        self.grant_campaign.remaining_funding = self
             .grant_campaign
             .remaining_funding
             .checked_sub(amount)

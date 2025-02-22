@@ -21,10 +21,10 @@ pub struct UpdateProposalStatus<'info> {
 
 impl<'info> UpdateProposalStatus<'info>{
     pub fn update_proposal_status(
-        ctx: Context<UpdateProposalStatus>,
+        &mut self,
         status: ProposalStatus
     ) -> Result<()> {
-        let proposal = &mut ctx.accounts.proposal;
+        let proposal = &mut self.proposal;
         let clock = Clock::get()?;
 
         proposal.status = status;

@@ -15,11 +15,11 @@ pub struct UpdateCampaign<'info> {
 
 impl<'info> UpdateCampaign<'info> {
     pub fn update_campaign(
-        ctx: Context<UpdateCampaign>,
+        &mut self,
         total_funding: u64,
         is_active: bool,
     ) -> Result<()> {
-        let campaign = &mut ctx.accounts.grant_campaign;
+        let campaign = &mut self.grant_campaign;
         let clock = Clock::get()?;
 
         campaign.total_funding = total_funding;
