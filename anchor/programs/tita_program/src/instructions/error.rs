@@ -9,5 +9,20 @@ pub enum TitaErrorCode {
     CalculationError,
 
     #[msg("No remaining funds")]
-    NoRemainingFunds
+    NoRemainingFunds,
+
+    #[msg("Only grant provider can approve or reject milestone")]
+    OnlyGrantProviderCanApproveMilestone,
+
+    #[msg("Deadline not exceeded")]
+    DeadlineNotExceeded,
+
+    #[msg("No deadline set")]
+    NoDeadlineSet,
+
+    #[msg("Deadline exceeded")]
+    DeadlineExceeded,
+
+    #[msg("Invalid status transition")]
+    InvalidStatusTransition
 }

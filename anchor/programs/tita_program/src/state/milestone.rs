@@ -3,8 +3,8 @@ use anchor_lang::prelude::*;
 #[account]
 #[derive(InitSpace)]
 pub struct Milestone {
-    pub proposal: Pubkey,
     pub milestone_id: u8,
+    pub proposal: Pubkey,
     pub amount: u64,
     pub created_at: i64,
     pub updated_at: i64,
@@ -17,7 +17,6 @@ pub struct Milestone {
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, PartialEq, InitSpace)]
 pub enum MilestoneStatus {
     Pending,
-    InProgress,
     Completed,
     Approved,
     Rejected,

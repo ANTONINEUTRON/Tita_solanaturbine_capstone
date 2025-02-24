@@ -5,7 +5,7 @@ use crate::state::*;
 pub struct SubmitProof<'info> {
     #[account(
         mut,
-        constraint = milestone.status == MilestoneStatus::InProgress,
+        constraint = milestone.status == MilestoneStatus::Pending,
         constraint = milestone.proposal == proposal.key()
     )]
     pub milestone: Account<'info, Milestone>,
@@ -29,7 +29,7 @@ impl<'info> SubmitProof<'info> {
         let clock = Clock::get()?;
 
         milestone.proof_uri = proof_uri;
-        milestone.status = MilestoneStatus::Pending;
+        milestone.status = MilestoneStatus::Completed;
         milestone.updated_at = clock.unix_timestamp;
 
         Ok(())

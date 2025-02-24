@@ -10,6 +10,9 @@ pub use create_milestone::*;
 pub mod create_proposal;
 pub use create_proposal::*;
 
+pub mod withdraw_from_proposal;
+pub use withdraw_from_proposal::*;
+
 pub mod set_milestone_status;
 pub use set_milestone_status::*;
 

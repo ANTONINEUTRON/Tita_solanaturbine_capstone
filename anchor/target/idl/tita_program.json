@@ -25,9 +25,35 @@
           "writable": true
         },
         {
+          "name": "campaign_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "grant_campaign"
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "provider_token_account",
+          "writable": true
+        },
+        {
           "name": "grant_provider",
           "writable": true,
           "signer": true
+        },
+        {
+          "name": "token_mint"
+        },
+        {
+          "name": "token_program"
         },
         {
           "name": "system_program",
@@ -55,6 +81,10 @@
           "signer": true
         },
         {
+          "name": "provider_token_account",
+          "writable": true
+        },
+        {
           "name": "grant_campaign",
           "writable": true,
           "pda": {
@@ -71,7 +101,7 @@
           }
         },
         {
-          "name": "vault",
+          "name": "campaign_vault",
           "writable": true,
           "pda": {
             "seeds": [
@@ -111,10 +141,6 @@
           "type": {
             "option": "i64"
           }
-        },
-        {
-          "name": "bumps",
-          "type": "u8"
         }
       ]
     },
@@ -165,10 +191,6 @@
         {
           "name": "proof_uri",
           "type": "string"
-        },
-        {
-          "name": "bump",
-          "type": "u8"
         }
       ]
     },
@@ -207,7 +229,29 @@
           }
         },
         {
+          "name": "proposal_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "proposal"
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ]
+          }
+        },
+        {
           "name": "grant_campaign"
+        },
+        {
+          "name": "token_mint"
+        },
+        {
+          "name": "token_program"
         },
         {
           "name": "system_program",
@@ -216,8 +260,18 @@
       ],
       "args": [
         {
-          "name": "bump",
-          "type": "u8"
+          "name": "proposal_id",
+          "type": "string"
+        },
+        {
+          "name": "deadline",
+          "type": {
+            "option": "i64"
+          }
+        },
+        {
+          "name": "ask_amount",
+          "type": "u64"
         }
       ]
     },
@@ -248,6 +302,32 @@
         },
         {
           "name": "grant_campaign"
+        },
+        {
+          "name": "proposal_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "proposal"
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "recipient",
+          "writable": true
+        },
+        {
+          "name": "token_mint"
+        },
+        {
+          "name": "token_program"
         }
       ],
       "args": [
@@ -342,6 +422,11 @@
       ],
       "accounts": [
         {
+          "name": "grant_provider",
+          "writable": true,
+          "signer": true
+        },
+        {
           "name": "proposal",
           "writable": true
         },
@@ -349,9 +434,42 @@
           "name": "grant_campaign"
         },
         {
-          "name": "grant_provider",
+          "name": "campaign_vault",
           "writable": true,
-          "signer": true
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "grant_campaign"
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "proposal_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "proposal"
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_mint"
+        },
+        {
+          "name": "token_program"
         }
       ],
       "args": [
@@ -364,6 +482,60 @@
           }
         }
       ]
+    },
+    {
+      "name": "withdraw_from_proposal",
+      "discriminator": [
+        0,
+        44,
+        63,
+        88,
+        127,
+        5,
+        188,
+        218
+      ],
+      "accounts": [
+        {
+          "name": "proposal",
+          "writable": true
+        },
+        {
+          "name": "grant_campaign"
+        },
+        {
+          "name": "grant_provider",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "proposal_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "proposal"
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "provider_token_account",
+          "writable": true
+        },
+        {
+          "name": "token_mint"
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": []
     }
   ],
   "accounts": [
@@ -422,6 +594,31 @@
       "code": 6002,
       "name": "NoRemainingFunds",
       "msg": "No remaining funds"
+    },
+    {
+      "code": 6003,
+      "name": "OnlyGrantProviderCanApproveMilestone",
+      "msg": "Only grant provider can approve or reject milestone"
+    },
+    {
+      "code": 6004,
+      "name": "DeadlineNotExceeded",
+      "msg": "Deadline not exceeded"
+    },
+    {
+      "code": 6005,
+      "name": "NoDeadlineSet",
+      "msg": "No deadline set"
+    },
+    {
+      "code": 6006,
+      "name": "DeadlineExceeded",
+      "msg": "Deadline exceeded"
+    },
+    {
+      "code": 6007,
+      "name": "InvalidStatusTransition",
+      "msg": "Invalid status transition"
     }
   ],
   "types": [
@@ -430,6 +627,10 @@
       "type": {
         "kind": "struct",
         "fields": [
+          {
+            "name": "campaign_id",
+            "type": "string"
+          },
           {
             "name": "total_funding",
             "type": "u64"
@@ -463,10 +664,6 @@
           {
             "name": "grant_provider",
             "type": "pubkey"
-          },
-          {
-            "name": "campaign_id",
-            "type": "string"
           }
         ]
       }
@@ -477,12 +674,12 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "proposal",
-            "type": "pubkey"
-          },
-          {
             "name": "milestone_id",
             "type": "u8"
+          },
+          {
+            "name": "proposal",
+            "type": "pubkey"
           },
           {
             "name": "amount",
@@ -524,9 +721,6 @@
             "name": "Pending"
           },
           {
-            "name": "InProgress"
-          },
-          {
             "name": "Completed"
           },
           {
@@ -544,6 +738,10 @@
         "kind": "struct",
         "fields": [
           {
+            "name": "proposal_id",
+            "type": "string"
+          },
+          {
             "name": "grant_campaign",
             "type": "pubkey"
           },
@@ -557,6 +755,20 @@
               "defined": {
                 "name": "ProposalStatus"
               }
+            }
+          },
+          {
+            "name": "ask_amount",
+            "type": "u64"
+          },
+          {
+            "name": "token_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "deadline",
+            "type": {
+              "option": "i64"
             }
           },
           {

@@ -31,9 +31,35 @@ export type TitaProgram = {
           "writable": true
         },
         {
+          "name": "campaignVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "grantCampaign"
+              },
+              {
+                "kind": "account",
+                "path": "tokenMint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "providerTokenAccount",
+          "writable": true
+        },
+        {
           "name": "grantProvider",
           "writable": true,
           "signer": true
+        },
+        {
+          "name": "tokenMint"
+        },
+        {
+          "name": "tokenProgram"
         },
         {
           "name": "systemProgram",
@@ -61,6 +87,10 @@ export type TitaProgram = {
           "signer": true
         },
         {
+          "name": "providerTokenAccount",
+          "writable": true
+        },
+        {
           "name": "grantCampaign",
           "writable": true,
           "pda": {
@@ -77,7 +107,7 @@ export type TitaProgram = {
           }
         },
         {
-          "name": "vault",
+          "name": "campaignVault",
           "writable": true,
           "pda": {
             "seeds": [
@@ -117,10 +147,6 @@ export type TitaProgram = {
           "type": {
             "option": "i64"
           }
-        },
-        {
-          "name": "bumps",
-          "type": "u8"
         }
       ]
     },
@@ -171,10 +197,6 @@ export type TitaProgram = {
         {
           "name": "proofUri",
           "type": "string"
-        },
-        {
-          "name": "bump",
-          "type": "u8"
         }
       ]
     },
@@ -213,7 +235,29 @@ export type TitaProgram = {
           }
         },
         {
+          "name": "proposalVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "proposal"
+              },
+              {
+                "kind": "account",
+                "path": "tokenMint"
+              }
+            ]
+          }
+        },
+        {
           "name": "grantCampaign"
+        },
+        {
+          "name": "tokenMint"
+        },
+        {
+          "name": "tokenProgram"
         },
         {
           "name": "systemProgram",
@@ -222,8 +266,18 @@ export type TitaProgram = {
       ],
       "args": [
         {
-          "name": "bump",
-          "type": "u8"
+          "name": "proposalId",
+          "type": "string"
+        },
+        {
+          "name": "deadline",
+          "type": {
+            "option": "i64"
+          }
+        },
+        {
+          "name": "askAmount",
+          "type": "u64"
         }
       ]
     },
@@ -254,6 +308,32 @@ export type TitaProgram = {
         },
         {
           "name": "grantCampaign"
+        },
+        {
+          "name": "proposalVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "proposal"
+              },
+              {
+                "kind": "account",
+                "path": "tokenMint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "recipient",
+          "writable": true
+        },
+        {
+          "name": "tokenMint"
+        },
+        {
+          "name": "tokenProgram"
         }
       ],
       "args": [
@@ -348,6 +428,11 @@ export type TitaProgram = {
       ],
       "accounts": [
         {
+          "name": "grantProvider",
+          "writable": true,
+          "signer": true
+        },
+        {
           "name": "proposal",
           "writable": true
         },
@@ -355,9 +440,42 @@ export type TitaProgram = {
           "name": "grantCampaign"
         },
         {
-          "name": "grantProvider",
+          "name": "campaignVault",
           "writable": true,
-          "signer": true
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "grantCampaign"
+              },
+              {
+                "kind": "account",
+                "path": "tokenMint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "proposalVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "proposal"
+              },
+              {
+                "kind": "account",
+                "path": "tokenMint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tokenMint"
+        },
+        {
+          "name": "tokenProgram"
         }
       ],
       "args": [
@@ -370,6 +488,60 @@ export type TitaProgram = {
           }
         }
       ]
+    },
+    {
+      "name": "withdrawFromProposal",
+      "discriminator": [
+        0,
+        44,
+        63,
+        88,
+        127,
+        5,
+        188,
+        218
+      ],
+      "accounts": [
+        {
+          "name": "proposal",
+          "writable": true
+        },
+        {
+          "name": "grantCampaign"
+        },
+        {
+          "name": "grantProvider",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "proposalVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "proposal"
+              },
+              {
+                "kind": "account",
+                "path": "tokenMint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "providerTokenAccount",
+          "writable": true
+        },
+        {
+          "name": "tokenMint"
+        },
+        {
+          "name": "tokenProgram"
+        }
+      ],
+      "args": []
     }
   ],
   "accounts": [
@@ -428,6 +600,31 @@ export type TitaProgram = {
       "code": 6002,
       "name": "noRemainingFunds",
       "msg": "No remaining funds"
+    },
+    {
+      "code": 6003,
+      "name": "onlyGrantProviderCanApproveMilestone",
+      "msg": "Only grant provider can approve or reject milestone"
+    },
+    {
+      "code": 6004,
+      "name": "deadlineNotExceeded",
+      "msg": "Deadline not exceeded"
+    },
+    {
+      "code": 6005,
+      "name": "noDeadlineSet",
+      "msg": "No deadline set"
+    },
+    {
+      "code": 6006,
+      "name": "deadlineExceeded",
+      "msg": "Deadline exceeded"
+    },
+    {
+      "code": 6007,
+      "name": "invalidStatusTransition",
+      "msg": "Invalid status transition"
     }
   ],
   "types": [
@@ -436,6 +633,10 @@ export type TitaProgram = {
       "type": {
         "kind": "struct",
         "fields": [
+          {
+            "name": "campaignId",
+            "type": "string"
+          },
           {
             "name": "totalFunding",
             "type": "u64"
@@ -469,10 +670,6 @@ export type TitaProgram = {
           {
             "name": "grantProvider",
             "type": "pubkey"
-          },
-          {
-            "name": "campaignId",
-            "type": "string"
           }
         ]
       }
@@ -483,12 +680,12 @@ export type TitaProgram = {
         "kind": "struct",
         "fields": [
           {
-            "name": "proposal",
-            "type": "pubkey"
-          },
-          {
             "name": "milestoneId",
             "type": "u8"
+          },
+          {
+            "name": "proposal",
+            "type": "pubkey"
           },
           {
             "name": "amount",
@@ -530,9 +727,6 @@ export type TitaProgram = {
             "name": "pending"
           },
           {
-            "name": "inProgress"
-          },
-          {
             "name": "completed"
           },
           {
@@ -550,6 +744,10 @@ export type TitaProgram = {
         "kind": "struct",
         "fields": [
           {
+            "name": "proposalId",
+            "type": "string"
+          },
+          {
             "name": "grantCampaign",
             "type": "pubkey"
           },
@@ -563,6 +761,20 @@ export type TitaProgram = {
               "defined": {
                 "name": "proposalStatus"
               }
+            }
+          },
+          {
+            "name": "askAmount",
+            "type": "u64"
+          },
+          {
+            "name": "tokenMint",
+            "type": "pubkey"
+          },
+          {
+            "name": "deadline",
+            "type": {
+              "option": "i64"
             }
           },
           {
