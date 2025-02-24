@@ -1,4 +1,4 @@
-use crate::{state::*, TitaErrorCode};
+use crate::state::*;
 use anchor_lang::prelude::*;
 use anchor_spl::token_interface::{
     close_account, transfer_checked, CloseAccount, Mint, TokenAccount, TokenInterface,
@@ -45,8 +45,6 @@ impl<'info> CloseCampaign<'info> {
     pub fn close_campaign(&mut self) -> Result<()> {
         let campaign = &mut self.grant_campaign;
         let vault_balance = self.campaign_vault.amount;
-
-        // require!(vault_balance > 0, TitaErrorCode::NoRemainingFunds);
 
         if vault_balance > 0 {
 
