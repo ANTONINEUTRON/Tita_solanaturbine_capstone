@@ -7,7 +7,7 @@ import { PublicKey, SystemProgram } from '@solana/web3.js';
 import fundWallet from './libs/fund_wallet';
 import assert from 'assert';
 
-describe('Grant Provider test', () => {
+describe('Grant Instructions test', () => {
     const provider = anchor.AnchorProvider.env();
     anchor.setProvider(provider);
 

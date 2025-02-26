@@ -93,6 +93,8 @@ pub mod tita_program {
     pub fn withdraw_from_proposal(
         ctx: Context<WithdrawFromProposal>
     ) -> Result<()> {
-        ctx.accounts.withdraw_from_proposal()
+        ctx.accounts.withdraw_from_proposal()?;
+
+        Ok(())
     }
 }
