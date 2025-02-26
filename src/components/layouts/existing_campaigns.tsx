@@ -1,10 +1,27 @@
 "use client"
 
-export function ExistingCampaignsLayout() {
+import { GrantCampaign } from "@/lib/types/grant_campaign"
+import CampaignItem from "../campaign_item"
+import Link from "next/link"
+
+interface ExistingCampaignsLayoutProps {
+    campaigns: GrantCampaign[]
+}
+
+export function ExistingCampaignsLayout({campaigns} : ExistingCampaignsLayoutProps) {
     return (
         <div>
-            <div>
-                <div className='font-bold'>YOUR CAMPAIGNS</div>
+            <div className="mb-8">
+                <div className='font-bold text-2xl'>YOUR CAMPAIGNS</div>
+            </div>
+            <div className="grid grid-cols-3 gap-6">
+                {
+                    campaigns.map((campaign, index) => (
+                        <Link href={`/campaign/${campaign.id}`} key={index}>
+                            <CampaignItem grantCampaign={campaign} />
+                        </Link>
+                    ))
+                }
             </div>
         </div>
     )
